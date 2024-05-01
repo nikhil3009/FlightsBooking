@@ -1,0 +1,5 @@
+/** @format */
+
+module.exports = {
+	AirplaneService: require('./airplane-service'),
+};
