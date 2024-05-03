@@ -1,63 +1,45 @@
 /** @format */
 
+const { StatusCodes } = require('http-status-codes');
 const { Logger } = require('../config');
+const { AppError } = require('../utils/errors/app-error');
 class CrudRepository {
 	constructor(model) {
 		this.model = model;
 	}
 	async create(data) {
-		console.log('inside repo');
-		try {
-			const response = await this.model.create(data);
-			return response;
-		} catch (error) {
-			Logger.error('Something went wrong in CRUD Repo create function');
-			throw error;
-		}
+		const response = await this.model.create(data);
+		return response;
 	}
 	async destroy(data) {
-		try {
-			const response = await this.model.destory({
-				where: {
-					id: data,
-				},
-			});
-			return response;
-		} catch (error) {
-			Logger.error('Something went wrong in CRUD Repo: Destroy');
-			throw error;
-		}
+		const response = await this.model.destory({
+			where: {
+				id: data,
+			},
+		});
+		return response;
 	}
 	async get(data) {
-		try {
-			const response = await this.model.get.findByPk(data);
-			return response;
-		} catch (error) {
-			Logger.error('Something went wrong in CRUD Repo: get');
-			throw error;
+		const response = await this.model.findByPk(data);
+		if (!response) {
+			throw new AppError(
+				'Not able to find the resource',
+				StatusCodes.NOT_FOUND
+			);
 		}
+		return response;
 	}
 	async getAll() {
-		try {
-			const response = await this.model.get.findAll();
-			return response;
-		} catch (error) {
-			Logger.error('Something went wrong in CRUD Repo: getAll');
-			throw error;
-		}
+		const response = await this.model.findAll();
+		return response;
 	}
 	async update(id, data) {
-		try {
-			const response = await this.model.get.update(data, {
-				where: {
-					id: id,
-				},
-			});
-			return response;
-		} catch (error) {
-			Logger.error('Something went wrong in CRUD Repo: update');
-			throw error;
-		}
+		const response = await this.model.update(data, {
+			where: {
+				id: id,
+			},
+		});
+		return response;
 	}
 }
 module.exports = CrudRepository;
