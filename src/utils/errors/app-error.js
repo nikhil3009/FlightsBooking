@@ -7,6 +7,5 @@ class AppError extends Error {
 		this.explanation = message;
 	}
 }
-module.exports = {
-	AppError,
-};
+
+module.exports = AppError;

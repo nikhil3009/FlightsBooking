@@ -2,7 +2,7 @@
 
 const success = {
 	sucess: true,
-	message: 'SUccessfully Completed the request',
+	message: 'Successfully Completed the request',
 	data: {},
 	error: {},
 };
